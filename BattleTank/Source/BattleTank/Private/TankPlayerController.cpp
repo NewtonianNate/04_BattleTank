@@ -9,7 +9,7 @@ void ATankPlayerController::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play"));
 }
 
-// Called every frame
+
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -25,8 +25,9 @@ void ATankPlayerController::Tick(float DeltaTime)
 	
 }
 
+
 ATank* ATankPlayerController::GetControlledTank() const
 {
-	UE_LOG(LogTemp, Warning, TEXT("Getting Controlled Tank..."));
+	UE_LOG(LogTemp, Warning, TEXT("Getting Player Controlled Tank..."));
 	return Cast<ATank>(GetPawn());
 }
