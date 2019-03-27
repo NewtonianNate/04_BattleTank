@@ -6,13 +6,6 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play"));
-}
-
-
-void ATankPlayerController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 	ATank *ControlledTank = GetControlledTank();
 	if (!ControlledTank)
 	{
@@ -22,12 +15,46 @@ void ATankPlayerController::Tick(float DeltaTime)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *(ControlledTank->GetName()));
 	}
-	
+}
+
+
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick( DeltaTime );
+	AimTowardsCrosshair();
+
 }
 
 
 ATank* ATankPlayerController::GetControlledTank() const
 {
-	UE_LOG(LogTemp, Warning, TEXT("Getting Player Controlled Tank..."));
 	return Cast<ATank>(GetPawn());
+}
+
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; }
+
+	FVector OutHitLocation; // Out parameter
+	if (GetSightRayHitLocation(OutHitLocation)) // Has "side-effect", is going to ray trace
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *OutHitLocation.ToString());
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Not Hitting Landscape"));
+	}
+	
+	  // TODO Tell controlled tank to aim at this point
+}
+
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
+{
+	//bool World = true;
+
+	OutHitLocation = FVector(1.0);
+	//OutHitLocation = GetWorld()->GetFirstPlayerController->GetFocalLocation();
+
+	return true;
 }
