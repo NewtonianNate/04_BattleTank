@@ -1,6 +1,7 @@
 // This game is copyright of Awny Betts. Based on Ben Tristem Unreal C++ Developer course.
 
 #include "TankPlayerController.h"
+#include "DrawDebugHelpers.h" // TODO delete this after debugline is no longer needed
 
 
 void ATankPlayerController::BeginPlay()
@@ -58,23 +59,51 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	
 	// "de-project" the screen position of the crosshair to a world direction
 	FVector LookDirection;
-	if (GetLookDirection(ScreenLocation, LookDirection))
+	FVector LookLocation;
+	if (GetLookDirection(ScreenLocation, LookLocation, LookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *LookDirection.ToString());
+		//Line-trace along that direction, and see what we hit (up to max range)
+		if (GetLookVectorHitLocation(LookLocation, LookDirection, OutHitLocation))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("LookVectorHitLocation: %s"), *OutHitLocation.ToString());
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
-	
-	// line trace along that LookDirection, and see what we hit (up to max range)
-	
-	return true;
+		
+	return false;
 }
 
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &LookLocation, FVector& LookDirection) const
 {
-	FVector ignored; //to be discarded
 	return DeprojectScreenPositionToWorld(
 		ScreenLocation.X,
 		ScreenLocation.Y,
-		ignored,
+		LookLocation,
 		LookDirection);
 	
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookLocation, FVector LookDirection, FVector &OutHitLocation) const
+{
+	FHitResult HitResult;
+	FVector LineTraceEnd = LookLocation + ( LookDirection * LineTraceRange );
+	
+	DrawDebugLine(GetWorld(), LookLocation, LineTraceEnd, FColor::Green, false, 0, 0, 1); // TODO delete this after debugging
+	
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult, 
+		LookLocation, 
+		LineTraceEnd, 
+		ECC_Visibility)
+		)
+	{
+		OutHitLocation = HitResult.ImpactPoint;
+		return true;
+	}
+	OutHitLocation = FVector(0);
+	return false;
 }
