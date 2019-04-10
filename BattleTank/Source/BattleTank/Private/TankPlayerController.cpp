@@ -1,5 +1,8 @@
 // This game is copyright of Awny Betts. Based on Ben Tristem Unreal C++ Developer course.
 
+#include "Tank.h"
+#include "Math/Vector.h"
+#include "Engine/World.h"
 #include "TankPlayerController.h"
 #include "DrawDebugHelpers.h" // TODO delete this after debugline is no longer needed
 
@@ -37,13 +40,13 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (!GetControlledTank()) { return; }
 
 	FVector OutHitLocation; // Out parameter
-	if (GetSightRayHitLocation(OutHitLocation)) // Has "side-effect", is going to ray trace
+	if (GetSightRayHitLocation(OutHitLocation)) // Has "side-effect", is going to line trace
 	{
 		GetControlledTank()->AimAt(OutHitLocation);
 	}
-	else
+	else // TODO delete this after debugging
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Not Hitting Landscape"));
+		//UE_LOG(LogTemp, Warning, TEXT("Not Hitting Landscape"));
 	}
 	
 	  
@@ -91,7 +94,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookLocation, FVect
 	FHitResult HitResult;
 	FVector LineTraceEnd = LookLocation + ( LookDirection * LineTraceRange );
 	
-	DrawDebugLine(GetWorld(), LookLocation, LineTraceEnd, FColor::Green, false, 0, 0, 1); // TODO delete this after debugging
+	//DrawDebugLine(GetWorld(), LookLocation, LineTraceEnd, FColor::Green, false, 0, 0, 1); // TODO delete this after debugging
 	
 	if (GetWorld()->LineTraceSingleByChannel(
 		HitResult, 

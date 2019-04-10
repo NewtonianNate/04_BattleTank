@@ -2,12 +2,14 @@
 
 #pragma once
 
-#include "Kismet/GameplayStatics.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+ //Forward declaration
+class UTankBarrel;
 
+// Holds barrel's properties and Elevate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
@@ -16,12 +18,12 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 	// TODO add SetTurretRefrence
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 
 private:	
-	UStaticMeshComponent* Barrel = nullptr;
+	UTankBarrel* Barrel = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
 };
