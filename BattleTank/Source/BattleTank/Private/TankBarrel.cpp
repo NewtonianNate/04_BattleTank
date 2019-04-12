@@ -1,6 +1,5 @@
 // This game is copyright of Awny Betts. Based on Ben Tristem Unreal C++ Developer course.
 
-//#include "Math/UnrealMathUtility.h"
 #include "TankBarrel.h"
 
 void UTankBarrel::Elevate(float RelativeSpeed)

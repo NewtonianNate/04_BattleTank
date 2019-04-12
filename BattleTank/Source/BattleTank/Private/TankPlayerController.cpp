@@ -1,9 +1,9 @@
 // This game is copyright of Awny Betts. Based on Ben Tristem Unreal C++ Developer course.
 
+#include "TankPlayerController.h"
 #include "Tank.h"
 #include "Math/Vector.h"
 #include "Engine/World.h"
-#include "TankPlayerController.h"
 #include "DrawDebugHelpers.h" // TODO delete this after debugline is no longer needed
 
 

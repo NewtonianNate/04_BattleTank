@@ -1,8 +1,9 @@
 // This game is copyright of Awny Betts. Based on Ben Tristem Unreal C++ Developer course.
 
 
-#include "Tank.h"
 #include "TankAIController.h"
+#include "Tank.h"
+
 
 
 void ATankAIController::BeginPlay()
