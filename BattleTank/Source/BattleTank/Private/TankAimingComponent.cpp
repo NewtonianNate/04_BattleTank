@@ -53,7 +53,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace, //this parameter has a default, and so could be omitted
 		FCollisionResponseParams::DefaultResponseParam, //this parameter can be omitted
 		TArray<AActor*>(), //this parameter can be omitted
-		true //this parameter can be omitted, set to True for debug path trace
+		false //this parameter can be omitted, set to True for debug path trace
 	);
 	if (bHaveAimSolution)
 	{
