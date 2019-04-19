@@ -3,7 +3,9 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
+#include "TankTrack.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 
 
 
@@ -15,6 +17,7 @@ ATank::ATank()
 
 	//No needed to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 }
 
 
@@ -23,12 +26,6 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-	
 }
 
 //Set Reference to barrel in TankAimingComponent
@@ -42,6 +39,24 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
+}
+
+//Set Reference to right track in TankMovementComponent
+void ATank::SetRightTrackReference(UTankTrack* RightTrackToSet)
+{
+	TankMovementComponent->SetRightTrackReference(RightTrackToSet);
+}
+
+//Set Reference to left track in TankMovementComponent
+void ATank::SetLeftTrackReference(UTankTrack* LeftTrackToSet)
+{
+	TankMovementComponent->SetLeftTrackReference(LeftTrackToSet);
+}
+
+
+void ATank::AimAt(FVector HitLocation)
+{
+	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()
@@ -62,4 +77,14 @@ void ATank::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 
+}
+
+void ATank::KeyboardForward()
+{
+	TankMovementComponent->KeyboardForward();
+}
+
+void ATank::KeyboardReverse()
+{
+	TankMovementComponent->KeyboardReverse();
 }

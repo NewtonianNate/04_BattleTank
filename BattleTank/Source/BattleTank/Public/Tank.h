@@ -9,8 +9,10 @@
 // Forward declarations
 class UTankBarrel; 
 class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
+class UTankTrack;
+class UTankAimingComponent;
+class UTankMovementComponent;
 
 
 UCLASS()
@@ -27,17 +29,29 @@ public:
 	UFUNCTION(BluePrintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret* TurretToSet);
 
+	UFUNCTION(BluePrintCallable, Category = Setup)
+		void SetRightTrackReference(UTankTrack* RightTrackToSet);
+
+	UFUNCTION(BluePrintCallable, Category = Setup)
+		void SetLeftTrackReference(UTankTrack* LeftTrackToSet);
+	
 	UFUNCTION(BluePrintCallable)
 		void Fire();
 
+	UFUNCTION(BluePrintCallable)
+		void KeyboardForward();
+
+	UFUNCTION(BluePrintCallable)
+		void KeyboardReverse();
+
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:	
 	// Sets default values for this pawn's properties
 	ATank();
 	
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
