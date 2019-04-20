@@ -27,4 +27,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MaxReverseSpeed = 5;
 	
+	// This is max force per track in Newtons
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		float TrackMaxDrivingForce = 400000; // Assume 40 tonne tankand 1g acceleration
+
 };
