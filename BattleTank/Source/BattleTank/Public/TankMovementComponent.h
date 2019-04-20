@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "TankMovementComponent.generated.h"
 
-class UTankTrack;
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -17,18 +16,12 @@ class BATTLETANK_API UTankMovementComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankMovementComponent();
-	void SetRightTrackReference(UTankTrack* RightTrackToSet);
-	void SetLeftTrackReference(UTankTrack* LeftTrackToSet);
-
-	void KeyboardForward();
-	void KeyboardReverse();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 private:	
-	UTankTrack* RightTrack = nullptr;
-	UTankTrack* LeftTrack = nullptr;
+
 	   	
 };

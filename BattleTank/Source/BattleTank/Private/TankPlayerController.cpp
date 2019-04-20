@@ -10,15 +10,6 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	ATank *ControlledTank = GetControlledTank();
-	if (!ControlledTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing a Tank"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *(ControlledTank->GetName()));
-	}
 }
 
 
@@ -44,10 +35,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 	{
 		GetControlledTank()->AimAt(OutHitLocation);
 	}
-	else // TODO delete this after debugging
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("Not Hitting Landscape"));
-	}
 	
 	  
 }
@@ -67,7 +54,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 		//Line-trace along that direction, and see what we hit (up to max range)
 		if (GetLookVectorHitLocation(LookLocation, LookDirection, OutHitLocation))
 		{
-			// TODO Delete: UE_LOG(LogTemp, Warning, TEXT("AimLocation: %s"), *OutHitLocation.ToString());
 			return true;
 		}
 		else

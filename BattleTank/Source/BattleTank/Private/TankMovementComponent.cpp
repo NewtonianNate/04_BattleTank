@@ -1,7 +1,6 @@
 // This game is copyright of Awny Betts. Based on Ben Tristem Unreal C++ Developer course.
 
 #include "TankMovementComponent.h"
-#include "TankTrack.h"
 
 
 // Sets default values for this component's properties
@@ -22,37 +21,5 @@ void UTankMovementComponent::BeginPlay()
 
 	// ...
 	
-}
-
-void UTankMovementComponent::SetRightTrackReference(UTankTrack* RightTrackToSet)
-{
-	if (!RightTrackToSet) { return; }
-
-	RightTrack = RightTrackToSet;
-}
-
-void UTankMovementComponent::SetLeftTrackReference(UTankTrack* LeftTrackToSet)
-{
-	if (!LeftTrackToSet) { return; }
-
-	LeftTrack = LeftTrackToSet;
-}
-
-
-void UTankMovementComponent::KeyboardForward()
-{
-	UE_LOG(LogTemp, Warning, TEXT("RightTrack:"));
-	RightTrack->Move(1.0);
-	UE_LOG(LogTemp, Warning, TEXT("LeftTrack:"));
-	LeftTrack->Move(1.0);
-	
-}
-
-void UTankMovementComponent::KeyboardReverse()
-{
-	UE_LOG(LogTemp, Warning, TEXT("RightTrack:"));
-	RightTrack->Move(-1.0);
-	UE_LOG(LogTemp, Warning, TEXT("LeftTrack:"));
-	LeftTrack->Move(-1.0);
 }
 

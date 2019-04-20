@@ -8,8 +8,6 @@ void UTankTurret::Rotate(float RelativeSpeed)
 	//Move the barrel the right amount this frame
 	// Given a max elevation speed, and the frame time
 
-	//UE_LOG(LogTemp, Warning, TEXT("TankTurret Rotating with %f"), RelativeSpeed);
-
 	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, 1);
 	auto RotationChange = RelativeSpeed * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
 	auto NewRotation = RelativeRotation.Yaw + RotationChange;

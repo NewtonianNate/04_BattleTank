@@ -12,7 +12,7 @@ class UTankTurret;
 class AProjectile;
 class UTankTrack;
 class UTankAimingComponent;
-class UTankMovementComponent;
+class UTankNavMovementComponent;
 
 
 UCLASS()
@@ -28,25 +28,14 @@ public:
 
 	UFUNCTION(BluePrintCallable, Category = Setup)
 		void SetTurretReference(UTankTurret* TurretToSet);
-
-	UFUNCTION(BluePrintCallable, Category = Setup)
-		void SetRightTrackReference(UTankTrack* RightTrackToSet);
-
-	UFUNCTION(BluePrintCallable, Category = Setup)
-		void SetLeftTrackReference(UTankTrack* LeftTrackToSet);
 	
 	UFUNCTION(BluePrintCallable)
 		void Fire();
 
-	UFUNCTION(BluePrintCallable)
-		void KeyboardForward();
-
-	UFUNCTION(BluePrintCallable)
-		void KeyboardReverse();
-
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
-	UTankMovementComponent* TankMovementComponent = nullptr;
+	UPROPERTY(BlueprintReadOnly)
+	UTankNavMovementComponent* TankNavMovementComponent = nullptr;
 
 private:	
 	// Sets default values for this pawn's properties

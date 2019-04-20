@@ -4,33 +4,12 @@
 
 
 
-void UTankTrack::Move(float RelativeSpeed)
-{
-	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, 1);
-
-	if (RelativeSpeed > 0)
-	{
-		float DeltaPosition = RelativeSpeed * MaxForwardSpeed * GetWorld()->DeltaTimeSeconds;
-		//auto NewPosition = RelativeLocation.ForwardVector + DeltaPosition;
-		//SetRelativeLocation(NewPosition);
-		UE_LOG(LogTemp, Warning, TEXT("Moving forward at %f"), DeltaPosition);
-	
-	}
-	else
-	{
-		float DeltaPosition = RelativeSpeed * MaxReverseSpeed * GetWorld()->DeltaTimeSeconds;
-		UE_LOG(LogTemp, Warning, TEXT("Moving reverse at %f"), DeltaPosition);
-	}
-
-}
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	FString Name = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s throttle: %f"), *Name, Throttle);
-
-	// TODO Clamp throttle
-
+	// TODO keyboard control is calling both MoveForward and TurnRight each fram
+	Throttle = FMath::Clamp<float>(Throttle, -1, 1);
+	UE_LOG(LogTemp, Warning, TEXT("Intend TurnRight: %f"), Throttle);
 	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
