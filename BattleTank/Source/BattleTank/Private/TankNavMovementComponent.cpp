@@ -24,3 +24,16 @@ void UTankNavMovementComponent::IntendTurnRight(float Throw)
 	RightTrack->SetThrottle(-Throw);
 	LeftTrack->SetThrottle(Throw);
 }
+
+/** path following: request new velocity */
+void UTankNavMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	// No need to call Super() as we're replacing the functionality
+
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+	IntendMoveForward(FVector::DotProduct(TankForward, AIForwardIntention));
+	IntendTurnRight(FVector::CrossProduct(AIForwardIntention, TankForward).Z);
+
+	//UE_LOG(LogTemp, Warning, TEXT("%s Vectoring to: %s"), *TankName, *MoveVelocityString);
+}

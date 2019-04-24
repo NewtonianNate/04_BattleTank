@@ -9,7 +9,7 @@ void UTankTrack::SetThrottle(float Throttle)
 {
 	// TODO keyboard control is calling both MoveForward and TurnRight each fram
 	Throttle = FMath::Clamp<float>(Throttle, -1, 1);
-	UE_LOG(LogTemp, Warning, TEXT("Intend TurnRight: %f"), Throttle);
+	//UE_LOG(LogTemp, Warning, TEXT("Track Throttle: %f"), Throttle);
 	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
