@@ -9,6 +9,11 @@
 
 
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay(); // Super must be called to run BluePrint BeginPlay()!!
+}
+
 // Sets default values
 ATank::ATank()
 {
@@ -19,6 +24,7 @@ ATank::ATank()
 
 void ATank::AimAt(FVector HitLocation)
 {
+	if (!TankAimingComponent) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 

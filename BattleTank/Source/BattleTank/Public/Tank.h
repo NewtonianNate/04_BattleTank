@@ -23,7 +23,7 @@ class BATTLETANK_API ATank : public APawn
 public:
 	void AimAt(FVector HitLocation);
 	
-	UFUNCTION(BluePrintCallable)
+	UFUNCTION(BluePrintCallable, Category = "Setup")
 		void Fire();
 
 protected:
@@ -34,9 +34,11 @@ protected:
 	UTankNavMovementComponent* TankNavMovementComponent = nullptr;
 
 private:	
+	virtual void BeginPlay() override;
 	// Sets default values for this pawn's properties
 	ATank();
 	
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 	// TSubclassOf protects against incorrect class selection in: UClass* ProjectileBlueprint; 
@@ -46,12 +48,10 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeInSeconds = 3; // TODO verify this is a good number
+		
+	// Loacal Barrel reference for spawning projectile
+	UTankBarrel* Barrel = nullptr; // TODO remove
 
-	
-	// Local barrel reference for spawning barrel projectile
-	UTankBarrel* Barrel = nullptr;
-
-	
 	double LastFireTime = 0;
 
 };
