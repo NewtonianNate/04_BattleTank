@@ -13,14 +13,14 @@ void UTankNavMovementComponent::Initialise(UTankTrack* RightTrackToSet, UTankTra
 
 void UTankNavMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!RightTrack || !LeftTrack) { return; }
+	if (!ensure(RightTrack && LeftTrack)) { return; }
 	RightTrack->SetThrottle(Throw);
 	LeftTrack->SetThrottle(Throw);
 }
 
 void UTankNavMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!RightTrack || !LeftTrack) { return; }
+	if (!ensure(RightTrack && LeftTrack)) { return; }
 	RightTrack->SetThrottle(-Throw);
 	LeftTrack->SetThrottle(Throw);
 }
@@ -29,11 +29,20 @@ void UTankNavMovementComponent::IntendTurnRight(float Throw)
 void UTankNavMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
 	// No need to call Super() as we're replacing the functionality
+	
 
 	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
 	IntendMoveForward(FVector::DotProduct(TankForward, AIForwardIntention));
 	IntendTurnRight(FVector::CrossProduct(TankForward, AIForwardIntention).Z);
+	
+	/*
+	auto Name = GetOwner()->GetName();
+	auto ForwardS = AIForwardIntention.ToString();
+	auto Turnright = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
+	UE_LOG(LogTemp, Warning, TEXT("%s Forward: %s"), *Name, *ForwardS);
+	UE_LOG(LogTemp, Warning, TEXT("%s Vectoring to: %f"), *Name, Turnright);
+	*/
 
 	//UE_LOG(LogTemp, Warning, TEXT("%s Vectoring to: %s"), *TankName, *MoveVelocityString);
 }

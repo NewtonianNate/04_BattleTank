@@ -12,7 +12,6 @@ class UTankTurret;
 class AProjectile;
 class UTankTrack;
 class UTankAimingComponent;
-class UTankNavMovementComponent;
 
 
 UCLASS()
@@ -30,8 +29,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankNavMovementComponent* TankNavMovementComponent = nullptr;
 
 private:	
 	virtual void BeginPlay() override;
