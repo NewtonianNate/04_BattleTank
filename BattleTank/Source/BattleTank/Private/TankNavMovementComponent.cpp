@@ -13,14 +13,14 @@ void UTankNavMovementComponent::Initialise(UTankTrack* RightTrackToSet, UTankTra
 
 void UTankNavMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!ensure(RightTrack && LeftTrack)) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	RightTrack->SetThrottle(Throw);
 	LeftTrack->SetThrottle(Throw);
 }
 
 void UTankNavMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!ensure(RightTrack && LeftTrack)) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	RightTrack->SetThrottle(-Throw);
 	LeftTrack->SetThrottle(Throw);
 }
@@ -33,9 +33,13 @@ void UTankNavMovementComponent::RequestDirectMove(const FVector& MoveVelocity, b
 
 	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
-	IntendMoveForward(FVector::DotProduct(TankForward, AIForwardIntention));
-	IntendTurnRight(FVector::CrossProduct(TankForward, AIForwardIntention).Z);
 	
+	auto ForwardThrow = FVector::DotProduct(TankForward, AIForwardIntention);
+	IntendMoveForward(ForwardThrow);
+
+	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
+	IntendTurnRight(RightThrow);
+
 	/*
 	auto Name = GetOwner()->GetName();
 	auto ForwardS = AIForwardIntention.ToString();
