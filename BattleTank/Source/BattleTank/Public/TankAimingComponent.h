@@ -42,8 +42,11 @@ protected:
 private:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 	void MoveBarrelTowards(FVector AimDirection);
+	bool IsBarrelMoving();
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
@@ -59,5 +62,6 @@ private:
 		float ReloadTimeInSeconds = 3; // TODO verify this is a good number
 
 	double LastFireTime = 0;
+	FVector AimDirection = FVector();
 
 };
