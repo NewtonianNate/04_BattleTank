@@ -20,9 +20,16 @@ public:
 		void SetThrottle(float Throttle);
 
 private:
-	
+	UTankTrack();
+	virtual void BeginPlay() override;
+	// TODO remove this: virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	void ApplySidewaysForce();
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 	// This is max force per track in Newtons
+	void DriveTrack();
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float TrackMaxDrivingForce = 50000000; // Assume 40 tonne tankand 1g acceleration
 
+	float CurrentThrottle = 0;
 };
