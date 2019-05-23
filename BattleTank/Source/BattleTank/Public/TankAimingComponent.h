@@ -35,9 +35,11 @@ public:
 	UFUNCTION(BluePrintCallable, Category = "Firing")
 		void Fire();
 
+	EFiringState GetFiringState() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringState FiringState = EFiringState::Locked;
+		EFiringState FiringState = EFiringState::Aiming;
 
 private:	
 	// Sets default values for this component's properties

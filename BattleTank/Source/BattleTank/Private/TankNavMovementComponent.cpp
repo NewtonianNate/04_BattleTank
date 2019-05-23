@@ -21,8 +21,8 @@ void UTankNavMovementComponent::IntendMoveForward(float Throw)
 void UTankNavMovementComponent::IntendTurnRight(float Throw)
 {
 	if (!ensure(LeftTrack && RightTrack)) { return; }
-	RightTrack->SetThrottle(-Throw*2);
-	LeftTrack->SetThrottle(Throw*2);
+	RightTrack->SetThrottle(-Throw);
+	LeftTrack->SetThrottle(Throw);
 }
 
 /** path following: request new velocity */

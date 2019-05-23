@@ -48,6 +48,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	}
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
@@ -95,8 +100,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
 
+	// Always yaw the shortest way
+	// TODO still has a bug at -X axis going all the way around
+	if (FMath::Abs(DeltaRotator.Yaw) > 180)
+	{
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
 }
 
 
@@ -119,6 +133,7 @@ void UTankAimingComponent::Fire()
 	}
 
 }
+
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
